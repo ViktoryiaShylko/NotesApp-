@@ -1,6 +1,9 @@
 const notesElems = document.querySelector('.notes');
 const addBtn = document.querySelector('.note-add');
 
+
+
+
 function createNote(title, text) {
     const elem = document.createElement('div');
     elem.classList.add('note');
@@ -16,6 +19,39 @@ function createNote(title, text) {
         <p id = "note-text">${text}</p>
         <textarea id = "note-textarea" class = "hidden"></textarea>
         `
+
+
+        /*-----LS manipulations----*/
+
+
+        localStorage.setItem('note', elem.innerHTML);
+
+        let notesArr = [];
+        notesArr.push(elem.innerHTML);
+        console.log(notesArr);
+
+        const saveNotesToLS = () => {
+            // преобразуем массив в строку
+            const notesString = JSON.stringify(notesArr);
+            // сохраняем строку в local storage нашего браузера
+            localStorage.setItem('notesArr', notesString);
+          }
+        
+          const getNotesFromLS = () => {
+            // считываем comments из local storage 
+            const notesString = localStorage.getItem('notesArr');
+            // преобразуем строку в массив и сохраняем во внешнюю переменную comments
+            notesArr = JSON.parse(notesString);
+          }
+
+
+
+
+        saveNotesToLS();
+        getNotesFromLS();
+
+
+        /*-----*/
 
         const editBtn = elem.querySelector('.note-edit');
         const deleteBtn = elem.querySelector('.note-delete');
@@ -44,10 +80,14 @@ function createNote(title, text) {
             textElem.innerText = e.target.value;
         });
 
+
         return elem;
+       
 }
 
 addBtn.addEventListener('click', (e) => {
     const el = createNote("Заголовок", "Текст заметки");
     notesElems.appendChild(el);
+   
 });
+

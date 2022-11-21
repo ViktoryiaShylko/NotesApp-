@@ -1,5 +1,6 @@
 const notesElems = document.querySelector('.notes');
 const addBtn = document.querySelector('.note-add');
+let notesArr = [];
 
 
 
@@ -26,9 +27,8 @@ function createNote(title, text) {
 
         localStorage.setItem('note', elem.innerHTML);
 
-        let notesArr = [];
+        
         notesArr.push(elem.innerHTML);
-        console.log(notesArr);
 
         const saveNotesToLS = () => {
             // преобразуем массив в строку
@@ -37,18 +37,13 @@ function createNote(title, text) {
             localStorage.setItem('notesArr', notesString);
           }
         
-          const getNotesFromLS = () => {
-            // считываем comments из local storage 
-            const notesString = localStorage.getItem('notesArr');
-            // преобразуем строку в массив и сохраняем во внешнюю переменную comments
-            notesArr = JSON.parse(notesString);
-          }
+          
 
 
 
 
         saveNotesToLS();
-        getNotesFromLS();
+        
 
 
         /*-----*/
@@ -91,3 +86,13 @@ addBtn.addEventListener('click', (e) => {
    
 });
 
+
+const getNotesFromLS = () => {
+  // считываем comments из local storage 
+  const notesString = localStorage.getItem('notesArr');
+  // преобразуем строку в массив и сохраняем во внешнюю переменную comments
+  notesArr = JSON.parse(notesString);
+}
+getNotesFromLS();
+
+console.log(notesArr);
